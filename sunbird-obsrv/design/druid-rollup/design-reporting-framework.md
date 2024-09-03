@@ -1,11 +1,10 @@
- **Introduction:** This document explains the current reporting state, its key problems and the proposed solution for generalising the reporting framework using the built-in analytics framework which can be extended for various use cases with reduced development effort.
+# \[Design]-Reporting-Framework
 
- **Analytics Framework - Current State** 
+**Introduction:** This document explains the current reporting state, its key problems and the proposed solution for generalising the reporting framework using the built-in analytics framework which can be extended for various use cases with reduced development effort.
 
+**Analytics Framework - Current State**
 
-
- **Druid based reports: **  **Below is the configuration for daily metrics job using Druid Query Model** 
-
+\*\*Druid based reports: \*\* **Below is the configuration for daily metrics job using Druid Query Model**
 
 ```
 {
@@ -807,49 +806,38 @@
   }
 ```
 
+**Reports Functionality**
 
- **Reports Functionality** 
-
- **Observations:** 
+**Observations:**
 
 After looking at the existing report jobs we can observe the following pattern emerge in terms of functionality :
 
-
 1. The data is retrieved from telemetry and transactional data sources
-1. All the data is joined to create a full data frame (similar to how a druid creates) on which the aggregate operations are done
-1. The output of the job is stored in blob store in CSV and JSON format. CSV for downloading the report and JSON to display dashboards.
-1. The reporting data is also being indexed into ElasticSearch for transactional based reports. For ex: Course Progress Report
+2. All the data is joined to create a full data frame (similar to how a druid creates) on which the aggregate operations are done
+3. The output of the job is stored in blob store in CSV and JSON format. CSV for downloading the report and JSON to display dashboards.
+4. The reporting data is also being indexed into ElasticSearch for transactional based reports. For ex: Course Progress Report
 
 And the following issues:
 
+1. **Dependency on Analytics team** . The other teams/products are dependent on the analytics team to create, test and execute the report daily
+2. **Duplication of code** . For ex: The user and org details are required in each report and are implemented in each report
+3. **Reliability of the reports doesn't exist** . For ex: No proper logging, replay capabilities, no metrics generated and manual monitoring.
+4. \*\*No integration into job manager. \*\* Many of the reports are built in python which makes it incompatible to run along with the existing data products. Due to this the dependencies are never known and the reports jobs go ahead with execution even if the core data product like WFS has failed to run for the day.
+5. \*\*Inefficient implementation. \*\* Most of the reports are not implemented to be executed in distributed model (none is fully aware of spark fundamentals) and hence either take too long to execute or need huge memory requirements.
+6. \*\*Insufficient logging. \*\* There is no proper logging mechanism to be able to debug an issue of report not being executed
 
-1.  **Dependency on Analytics team** . The other teams/products are dependent on the analytics team to create, test and execute the report daily
-1.  **Duplication of code** . For ex: The user and org details are required in each report and are implemented in each report
-1.  **Reliability of the reports doesn't exist** . For ex: No proper logging, replay capabilities, no metrics generated and manual monitoring.
-1.  **No integration into job manager. ** Many of the reports are built in python which makes it incompatible to run along with the existing data products. Due to this the dependencies are never known and the reports jobs go ahead with execution even if the core data product like WFS has failed to run for the day.
-1.  **Inefficient implementation. ** Most of the reports are not implemented to be executed in distributed model (none is fully aware of spark fundamentals) and hence either take too long to execute or need huge memory requirements.
-1.  **Insufficient logging. ** There is no proper logging mechanism to be able to debug an issue of report not being executed
+**Key Design Problems** Following are the key design problems:
 
- **Key Design Problems** Following are the key design problems:
+1. **Reliability of reports execution**
+2. **Abstraction of spark internals in distributed computing and memory management**
+3. **Scheduling and execution based on dependencies**
+4. **Metrics generation for application monitoring**
+5. **Reusability**
 
+**Proposed Solution:** Based on the above observations, we propose to create a Reporting Framework on top of the existing analytics framework which will aid in building reports which are more maintainable, requires little development effort and learning curve and provides more stability.
 
-1.  **Reliability of reports execution** 
-1.  **Abstraction of spark internals in distributed computing and memory management** 
-1.  **Scheduling and execution based on dependencies** 
-1.  **Metrics generation for application monitoring** 
-1.  **Reusability** 
+![](<../../../Design.Wiki/images/storage/Reporting framework (2).jpg>)
 
- **Proposed Solution:** Based on the above observations, we propose to create a Reporting Framework on top of the existing analytics framework which will aid in building reports which are more maintainable, requires little development effort and learning curve and provides more stability.
+***
 
-
-
-![](images/storage/Reporting%20framework%20(2).jpg)
-
-
-
-
-
-*****
-
-[[category.storage-team]] 
-[[category.confluence]] 
+\[\[category.storage-team]] \[\[category.confluence]]
