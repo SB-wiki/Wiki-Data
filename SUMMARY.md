@@ -2,6 +2,10 @@
 
 * [Welcome to Coss Wiki](README.md)
   * [Sunbird Wiki](welcome-to-coss-wiki/sunbird-wiki/README.md)
+    * [Understanding Sunbird](welcome-to-coss-wiki/sunbird-wiki/understanding-sunbird/README.md)
+      * [Sunbird Adoptions](welcome-to-coss-wiki/sunbird-wiki/understanding-sunbird/sunbird-adoptions.md)
+      * [Sunbird Ecosystem Overview](welcome-to-coss-wiki/sunbird-wiki/understanding-sunbird/sunbird-ecosystem-overview.md)
+      * [Sunbird Architecture and Overview](welcome-to-coss-wiki/sunbird-wiki/understanding-sunbird/sunbird-architecture-and-overview.md)
     * [Sunbird-Obsrv](welcome-to-coss-wiki/sunbird-wiki/sunbird-obsrv/README.md)
       * [1. Knowledge Documents](welcome-to-coss-wiki/sunbird-wiki/sunbird-obsrv/1.-knowledge-documents/README.md)
         * [1.  How to?](welcome-to-coss-wiki/sunbird-wiki/sunbird-obsrv/1.-knowledge-documents/1.-how-to.md)
