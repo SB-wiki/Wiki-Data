@@ -1,2 +1,0 @@
-# MOSIP Wiki
-

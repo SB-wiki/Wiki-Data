@@ -1,2 +1,0 @@
-# Denorm-User-Metadata
-

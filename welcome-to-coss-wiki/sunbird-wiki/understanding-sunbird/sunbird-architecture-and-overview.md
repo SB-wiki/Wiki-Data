@@ -1,2 +1,0 @@
-# Sunbird Architecture and Overview
-
